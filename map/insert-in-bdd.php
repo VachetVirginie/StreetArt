@@ -1,31 +1,15 @@
+
 <?php
-
-$host_name="localhost";
-$user_name="root";
-$password="";
-$database="street";
-
-$bdd = mysqli_connect($host_name, $user_name, $password, $database);
-if (mysqli_connect_errno())
-{
-    echo "La connexion au serveur MySQL n'a pas abouti : " . mysqli_connect_error();
-}
-
-$req = mysqli_prepare($bdd, 'INSERT INTO tbl_places (lat, lng)');
-if ($req === false) {
-  echo 'erreur prepare';
-  print_r(mysqli_error_list($bdd));
-  die();
-}
-$res = mysqli_stmt_bind_param($req, 'ssssssss', $lat, $lng);
-if ($res === false) {
-  echo 'erreur bind param';
-  print_r(mysqli_error_list($bdd));
-  die();
-}
-$res = mysqli_stmt_execute($req);
-if ($res === false) {
-  echo 'erreur execute';
-  print_r(mysqli_error_list($bdd));
-  die();
-}
+ header('Content-type: text/html; charset=ISO-8859-1');
+ if(isset($_POST['lat']) && isset($_POST['lng'])){
+  $lat = addslashes($_POST['lat']);
+  $lng = addslashes($_POST['lng']);
+  $adr = addslashes($_POST['adr']);
+  $db = mysql_connect(SERVER, USER, PASSWORD);
+  $select = mysql_select_db(DATABASE, $db);
+  mysql_query('INSERT INTO ma_table (lat,lng,adresse)
+               VALUES ("'.$lat.'","'.$lng.'","'.$adr.'")');
+  echo 'Vos coordonnées ont bien été insérées en base de données.';
+ }else
+   echo 'Problème rencontré dans les valeurs passées en paramètres';
+?>

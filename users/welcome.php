@@ -111,6 +111,7 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 
                 <div class="section">
                     <a href="http://www.thewildhoneypie.com/videos" class="view-all">View All</a>
+                    <a href="/StreetArt/commentaires/minichat.php" class="view-all">Poster</a>
                     <h2 class="header-text header-text--small">Dernieres photos postées</h2>
                     <hr class="line">
 
@@ -123,52 +124,30 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
                             <h3 class="grid-item__title header-text header-text--small">Overcoats</h3>
                             <h4 class="grid-item__subtitle link">Released June 6, 2017</h4>
                         </a>
+<?php
+// Connexion à la base de données
+try
+{
+	$bdd = new PDO('mysql:host=localhost;dbname=street;charset=utf8', 'root', '');
+}
+catch(Exception $e)
+{
+        die('Erreur : '.$e->getMessage());
+}
 
-                        <a class="grid-item" href="http://www.thewildhoneypie.com/videos/lucius">
-                            <img class="grid-item__image" srcset="lucius-3-copy.jpg 320w,
-            lucius-3-copy-1.jpg 500w,
-            lucius-3-copy-2.jpg 640w,
-            lucius-3-copy-3.jpg 1000w" sizes="(max-width: 576px) 86vw, 320px" src="lucius-3-copy-1.jpg" data-transition="source" alt="Lucius">
-                            <h3 class="grid-item__title header-text header-text--small">Lucius</h3>
-                            <h4 class="grid-item__subtitle link">Released March 1, 2017</h4>
-                        </a>
+// Récupération des 10 derniers messages
+$reponse = $bdd->query('SELECT pseudo, message FROM minichat ORDER BY ID DESC LIMIT 0, 10');
 
-                        <a class="grid-item" href="http://www.thewildhoneypie.com/videos/dr-dog">
-                            <img class="grid-item__image" srcset="drdog-timlines-copy.jpg 320w,
-            drdog-timlines-copy-1.jpg 500w,
-            drdog-timlines-copy-2.jpg 640w,
-            drdog-timlines-copy-3.jpg 1000w" sizes="(max-width: 576px) 86vw, 320px" src="drdog-timlines-copy-1.jpg" data-transition="source" alt="Dr. Dog">
-                            <h3 class="grid-item__title header-text header-text--small">Dr. Dog</h3>
-                            <h4 class="grid-item__subtitle link">Released September 1, 2015</h4>
-                        </a>
+// Affichage de chaque message (toutes les données sont protégées par htmlspecialchars)
+while ($donnees = $reponse->fetch())
+{
+	echo '<p><strong>' . htmlspecialchars($donnees['pseudo']) . '</strong> : '  . htmlspecialchars($donnees['message']) .'</p>';
+}
 
-                        <a class="grid-item" href="http://www.thewildhoneypie.com/videos/bombay-bicycle-club">
-                            <img class="grid-item__image" srcset="bombaybicycleclub-fonzy-copy.jpg 320w,
-            bombaybicycleclub-fonzy-copy-1.jpg 500w,
-            bombaybicycleclub-fonzy-copy-2.jpg 640w,
-            bombaybicycleclub-fonzy-copy-3.jpg 1000w" sizes="(max-width: 576px) 86vw, 320px" src="bombaybicycleclub-fonzy-copy-1.jpg" data-transition="source" alt="Bombay Bicycle Club">
-                            <h3 class="grid-item__title header-text header-text--small">Bombay Bicycle Club</h3>
-                            <h4 class="grid-item__subtitle link">Released March 12, 2015</h4>
-                        </a>
+$reponse->closeCursor();
 
-                        <a class="grid-item" href="http://www.thewildhoneypie.com/videos/cage-the-elephant">
-                            <img class="grid-item__image" srcset="cagetheelephant-2-timlines.jpg 320w,
-            cagetheelephant-2-timlines-1.jpg 500w,
-            cagetheelephant-2-timlines-2.jpg 640w,
-            cagetheelephant-2-timlines-3.jpg 1000w" sizes="(max-width: 576px) 86vw, 320px" src="cagetheelephant-2-timlines-1.jpg" data-transition="source" alt="Cage The Elephant">
-                            <h3 class="grid-item__title header-text header-text--small">Cage The Elephant</h3>
-                            <h4 class="grid-item__subtitle link">Released December 17, 2014</h4>
-                        </a>
-
-                        <a class="grid-item" href="http://www.thewildhoneypie.com/videos/alt-j">
-                            <img class="grid-item__image" srcset="altj-kevinbudnik-copy.jpg 320w,
-            altj-kevinbudnik-copy-1.jpg 500w,
-            altj-kevinbudnik-copy-2.jpg 640w,
-            altj-kevinbudnik-copy-3.jpg 1000w" sizes="(max-width: 576px) 86vw, 320px" src="altj-kevinbudnik-copy-1.jpg" data-transition="source" alt="alt-J">
-                            <h3 class="grid-item__title header-text header-text--small">alt-J</h3>
-                            <h4 class="grid-item__subtitle link">Released November 20, 2012</h4>
-                        </a>
-
+?>
+                        
                     </div>
 
                 </div>

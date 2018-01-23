@@ -1,0 +1,2 @@
+create table `minichat` (id int(10)auto_increment, pseudo varchar(50), message varchar(255),PRIMARY KEY  (`id`));
+Query OK, 0 rows affected (0,34 sec)
