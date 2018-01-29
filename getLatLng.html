@@ -97,3 +97,7 @@ Address:
 </script>
 </body>
 </html>
+
+//////
+mysql_query("INSERT INTO matable VALUES('', '', '', '', '$placemark->getPoint()->getLatitude()', '$placemark->getPoint()->getLongitude()', '')") or die (mysql_error());
+<!--  -->
